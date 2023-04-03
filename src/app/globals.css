@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Tilt+Warp&display=swap');
+
 :root {
-  --max-width: 1100px;
+  --max-width: 1440px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
@@ -7,7 +9,6 @@
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -40,39 +41,6 @@
   --card-border-rgb: 131, 134, 135;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-      to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
-    );
-
-    --tile-start-rgb: 2, 13, 46;
-    --tile-end-rgb: 2, 5, 19;
-    --tile-border: conic-gradient(
-      #ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80
-    );
-
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-  }
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -100,8 +68,117 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+main{
+  width: 100%;
+}
+header{
+  display: grid;
+  place-items: center;
+  margin: 86px 0 0 0;
+}
+nav{
+  width: 1020px;
+  height: 66px;
+  margin:16px auto 24px auto;
+  padding: 20px;
+  border: rgba(0, 0, 0, 0.5) solid 2px;
+  display: flex;
+  border-radius: 10px;
+}
+input{
+  margin-left: 11.51px;
+  border-width: 0;
+  font-size: 18px;
+  width: 900px;
+  font-weight: 400;
+  font-family: 'Roboto';
+  font-style: normal;
+  color: rgba(0, 0, 0, 0.5);
+}
+input:focus-visible{
+  color:black;
+  border-width: 0;
+  outline: none;
+}
+section{
+  width: 1020px;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.homeSubject{
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+}
+.homeSubjDetails{
+  padding: 20px;
+}
+.homeName{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 30px;
+  color: rgba(0, 0, 0, 0.87);
+  mix-blend-mode: normal;
+}
+.homeSpecies{
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.25px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  mix-blend-mode: normal;
+}
+.profile {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+/* Profile picture */
+.profile img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+/* Profile name */
+.profile h1 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 36px;
+  color: #333;
+}
+/* Profile bio */
+.profile p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+  color: #666;
+}
+/* Profile stats */
+.profile ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+  padding: 0;
+}
+.profile ul li {
+  text-align: center;
+}
+.profile ul li span {
+  display: block;
+  font-size: 24px;
+  color: #333;
+}
+.profile ul li small {
+  display: block;
+  font-size: 14px;
+  color: #666;
 }

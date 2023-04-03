@@ -1,91 +1,86 @@
+"use client";
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Link from 'next/link';
+import * as React from 'react';
 
 export default function Home() {
+  const [data, setData] = React.useState<any>()
+  const [isLoading, setLoading] = React.useState(true)
+  const [isError, setIsError] = React.useState(false)
+  const [query, setQuery] = React.useState('')
+
+  React.useEffect(() => {
+    setLoading(true)
+    initQuery()
+  }, [])
+  function initQuery() {
+    fetch('https://rickandmortyapi.com/api/character')
+      .then((res) => res?.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+      })
+  }
+  function querying(query: string) {
+    setLoading(true)
+    fetch(`https://rickandmortyapi.com/api/character/?name=${query}`)
+      .then((res) =>
+        res?.json()
+      )
+      .then((data) => {
+        if (data.error) {
+          setIsError(true);
+          return data.error
+        } else {
+          setData(data)
+          if (!!data) {
+            setLoading(false)
+            setIsError(false)
+          } else {
+            setTimeout(() => {
+              initQuery()
+            }, 5000);
+          }
+        }
+      })
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <main>
+        <header>
+          <Image src={'/ramLogo.svg'} alt={'ramLogo'} width={600} height={200}></Image>
+        </header>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
+        <nav>
+          <Image src={'/search.svg'} alt={'searchButt'} width={17.49} height={17.49}></Image>
+          <input type="text" id="search" name="name" placeholder='Filter by names...' onChange={(e: any) => {
+            setQuery(e.target.value); console.log(e.target.value); querying(query)
+          }
+          }
+          />
+        </nav>
+        <section>
+          {
+            !isLoading ?
+              data.results?.map((el: any) => (
+                <Link key={el.id} href={`http://localhost:3000/details/${el.id}`}>
+                  <div className='homeSubject'>
+                    <Image src={el.image} alt={'searchButt'} width={240} height={168} loading={'lazy'}></Image>
+                    <div className='homeSubjDetails'>
+                      <div className='homeName'><h3>{el.name}</h3></div>
+                      <div className='homeSpecies'>{el.species}</div>
+                    </div>
+                  </div>
+                </Link>)) :
+              isError ?
+                <>No such chars in Rick and Morty show</> :
+                <p>loading</p>
+          }
+        </section>
+        <section>
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        </section>
+      </main>
+    </>
   )
 }
